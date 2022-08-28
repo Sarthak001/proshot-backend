@@ -3,6 +3,7 @@ package db
 import (
 	"log"
 
+	"github.com/Sarthak001/proshot-backend/pkg/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -14,7 +15,7 @@ func Init(url string) *gorm.DB {
 		log.Fatalln(err)
 	}
 
-	// db.AutoMigrate(&models.UserDetails{}, &models.Expense{}, &models.ExpenseCatagory{})
+	db.AutoMigrate(&models.UserDetails{}, &models.Album{}, &models.Photo{}, &models.SharedAlbum{})
 
 	return db
 }

@@ -17,3 +17,7 @@ func (h handler) DeleteAlbum(c *gin.Context) {
 func (h handler) UpdateAlbum(c *gin.Context) {
 
 }
+
+func (h handler) GetAlbumImages(c *gin.Context) {
+
+}

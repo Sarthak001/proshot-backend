@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	viper.SetConfigFile("./pkg/common/envs/.env")
+	viper.SetConfigFile("./pkg/env/.env")
 	viper.ReadInConfig()
 
 	ip := viper.Get("IP").(string)

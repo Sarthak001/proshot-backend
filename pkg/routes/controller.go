@@ -19,12 +19,16 @@ func RegisterRoutes(r *gin.Engine, db *gorm.DB) {
 	r.POST("/register", h.Register)
 
 	routes := r.Group("/api/", middlewares.Authz())
+
+	routes.POST("/upload/:albumid", h.Upload)
+
+	routes.GET("/getprofile/", h.GetProfile)
+	routes.GET("/getalbumdata/:albumid", h.GetAlbumImages)
 	routes.GET("/getalbums", h.GetAlbums)
-	routes.PUT("/updatealbum/:id", h.UpdateAlbum)
 
-	routes.GET("/getalbumdata/:id")
+	routes.PUT("/updateprofile/", h.UpdateProfile)
+	routes.PUT("/updatealbum/:albumid", h.UpdateAlbum)
 
-	routes.GET("/getprofile/:id", h.GetProfile)
-	routes.PUT("/updateprofile/:id", h.UpdateProfile)
+	routes.DELETE("/deletealbum/:albumid", h.DeleteAlbum)
 
 }
