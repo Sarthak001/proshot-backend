@@ -19,22 +19,24 @@ type UserDetails struct {
 
 type Album struct {
 	gorm.Model
-	Name            string        `json:"name" gorm:"type:VARCHAR(255);uniqueIndex;NOT NULL"`
+	Albumid         string        `json:"albumId" gorm:"type:VARCHAR(255);uniqueIndex;NOT NULL"`
+	Name            string        `json:"name" gorm:"type:VARCHAR(255);NOT NULL"`
 	Path            string        `json:"path" gorm:"type:VARCHAR(255)"`
 	Owner           string        `json:"owner" gorm:"type:VARCHAR(255);"`
 	Description     string        `json:"description" gorm:"type:VARCHAR(255);"`
 	Sharedto        string        `json:"sharedTo" gorm:"type:VARCHAR(255);"`
-	Photos          []Photo       `gorm:"foreignKey:Album;references:Name"`
-	Sharedalbumname []SharedAlbum `gorm:"foreignKey:Albumname;references:Name"`
+	Photos          []Photo       `gorm:"foreignKey:Album;references:Albumid"`
+	Sharedalbumname []SharedAlbum `gorm:"foreignKey:Albumname;references:Albumid"`
 }
 
 type Photo struct {
 	gorm.Model
-	Name  string `json:"firstName" gorm:"type:VARCHAR(255)"`
-	Path  string `json:"path" gorm:"type:VARCHAR(255)"`
-	Size  int64  `json:"size" gorm:"type:INT"`
-	Owner string `json:"Owner" gorm:"type:VARCHAR(255);"`
-	Album string `json:"album" gorm:"type:VARCHAR(255)"`
+	Photoid string `json:"photoId" gorm:"type:VARCHAR(255)"`
+	Name    string `json:"fileName" gorm:"type:VARCHAR(255)"`
+	Path    string `json:"path" gorm:"type:VARCHAR(255)"`
+	Size    int64  `json:"size" gorm:"type:INT"`
+	Owner   string `json:"Owner" gorm:"type:VARCHAR(255);"`
+	Album   string `json:"album" gorm:"type:VARCHAR(255)"`
 }
 
 type SharedAlbum struct {
