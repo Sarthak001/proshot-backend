@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -19,6 +18,12 @@ type GetAlbumsResponseBody struct {
 	Statuscode int64          `json:"statusCode"`
 	Message    string         `json:"message"`
 	Albums     []models.Album `json:"Albums"`
+}
+type GetSharedAlbumsResponseBody struct {
+	Status     string               `json:"status"`
+	Statuscode int64                `json:"statusCode"`
+	Message    string               `json:"message"`
+	Albums     []models.SharedAlbum `json:"Albums"`
 }
 
 type CreateAlbumRequestBody struct {
@@ -70,16 +75,15 @@ func (h handler) GetAlbums(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 
 }
-
-func (h handler) DeleteAlbum(c *gin.Context) {
+func (h handler) GetSharedAlbums(c *gin.Context) {
+	sharedalbums := []models.SharedAlbum{}
 	ctxuser := c.MustGet("user").(*middlewares.Context)
-	fmt.Println(ctxuser)
-
-}
-
-func (h handler) UpdateAlbum(c *gin.Context) {
-	ctxuser := c.MustGet("user").(*middlewares.Context)
-	fmt.Println(ctxuser)
+	if result := h.DB.Where(&models.SharedAlbum{Owner: ctxuser.Username}).Find(&sharedalbums); result.Error != nil {
+		c.AbortWithError(http.StatusNotFound, result.Error)
+		return
+	}
+	response := GetSharedAlbumsResponseBody{Status: "ok", Statuscode: 200, Message: "data fetched", Albums: sharedalbums}
+	c.JSON(http.StatusOK, response)
 
 }
 

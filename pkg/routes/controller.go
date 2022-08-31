@@ -17,7 +17,6 @@ func RegisterRoutes(r *gin.Engine, db *gorm.DB) {
 
 	r.POST("/login", h.Login)
 	r.POST("/register", h.Register)
-	r.GET("/dummydata", h.Dummydata)
 
 	r.GET("/protected/:photoid", middlewares.ImageAuthz(), h.GetPhoto)
 
@@ -27,8 +26,8 @@ func RegisterRoutes(r *gin.Engine, db *gorm.DB) {
 	routes.GET("/getprofile/", h.GetProfile)
 	routes.GET("/getalbumdata/:albumid", h.GetAlbumImages)
 	routes.GET("/getalbums", h.GetAlbums)
+	routes.GET("/getsharedalbums", h.GetSharedAlbums)
+
 	routes.PUT("/updateprofile/", h.UpdateProfile)
-	routes.PUT("/updatealbum/:albumid", h.UpdateAlbum)
-	routes.DELETE("/deletealbum/:albumid", h.DeleteAlbum)
 
 }
