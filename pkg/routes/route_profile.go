@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/Sarthak001/proshot-backend/pkg/middlewares"
@@ -25,6 +26,7 @@ func (h handler) GetProfile(c *gin.Context) {
 		c.AbortWithError(http.StatusNotFound, result.Error)
 		return
 	}
+	fmt.Println(user)
 	response := GetProfileResponseBody{"ok", 200, user.Firstname, user.Lastname, user.Username, user.Email}
 	c.JSON(http.StatusOK, response)
 
