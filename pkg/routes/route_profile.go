@@ -21,9 +21,9 @@ type GetProfileResponseBody struct {
 func (h handler) GetProfile(c *gin.Context) {
 	ctxuser := c.MustGet("user").(*middlewares.Context)
 	user := models.UserDetails{}
-	if result := h.DB.Where(&models.UserDetails{Username: ctxuser.Username}).First(&user); result.Error != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"status": false, "message": "UserName or Password incorrect"})
-		c.AbortWithError(http.StatusNotFound, result.Error)
+	if result := h.DB.Where(&models.UserDetails{Username: ctxuser.Username}).Find(&user); result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": false, "message": "Something Went Wrong"})
+		c.Abort()
 		return
 	}
 	fmt.Println(user)
